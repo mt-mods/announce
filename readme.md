@@ -1,15 +1,20 @@
 
+
+```sh
+docker-compose exec minetest sh
+```
+
 ```sh
 json='{
     "action":"start",
     "port":30000,
-    "address":"127.0.0.1",
+    "address":"minetest",
     "name":"testserver",
     "description":"desc",
     "version":"1.2.3-xy",
     "proto_min": 39,
     "proto_max": 40,
-    "url": "http://localhost:8080",
+    "url": "http://minetest:8080",
     "creative": false,
     "damage": false,
     "password": true,
@@ -23,9 +28,9 @@ json='{
     "dedicated":true,
     "rollback":false,
     "mapgen":"v7",
-    "privs":["shout"],
+    "privs":"shout",
     "can_see_far_names":false,
     "mods":["default"]
 }'
-curl -v -F "json=${json}" "http://127.0.0.1:8080/announce"
+curl -v -F "json=${json}" "http://serverlist:8080/announce"
 ```
