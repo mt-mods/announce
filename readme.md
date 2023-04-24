@@ -19,6 +19,21 @@ The engine doesn't currently expose the supported protocol versions
 and the mod tries to guess the min- and max-values as best as possible
 depending on the `minetest.features` table.
 
+# Setting up
+
+Install the mod and configure its settings:
+
+```
+# default setting, required
+serverlist_url = http://serverlist:8080
+# this setting is **not** used, the mod is always active
+server_announce = true
+# needed to access the serverlist
+secure.http_mods = announce
+# anonymize setting
+announce_anonymize = true
+```
+
 # License
 
 MIT
