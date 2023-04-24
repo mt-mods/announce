@@ -9,8 +9,6 @@ Minetest server-announce mod
 
 * Announcing the server to the serverlist
 * Player-anonymization (if the `announce_anonymize` setting is `true`)
-
-Planned features
 * Multi-announce
 
 # Shortcomings
@@ -23,15 +21,22 @@ depending on the `minetest.features` table.
 
 Install the mod and configure its settings:
 
+**NOTE:** the `server_announce` setting is unused
+
+For a simple single-serverlist announcement with anonymization:
 ```
 # default setting, required
-serverlist_url = http://serverlist:8080
-# this setting is **not** used, the mod is always active
-server_announce = true
+serverlist_url = https://servers.minetest.net
 # needed to access the serverlist
 secure.http_mods = announce
 # anonymize setting
 announce_anonymize = true
+```
+
+Multiple serverlists:
+```
+serverlist_url = https://servers.minetest.net,https://my.server.list
+secure.http_mods = announce
 ```
 
 # License

@@ -9,22 +9,28 @@ local function send_announce_payload(data)
         json .. "\r\n" ..
         "--" .. boundary .. "--\r\n"
 
-    http.fetch({
-        url = minetest.settings:get("serverlist_url") .. "/announce",
-        timeout = 30,
-        extra_headers = {
-            "Content-Type: multipart/form-data; boundary=" .. boundary
-        },
-        data = post_data,
-        method = "POST"
-    }, function(res)
-        if res.code >= 400 then
-            minetest.log(
-                "warning",
-                "[announce-mod] Announcing failed for action: '" .. data.action .. "' code: " .. res.code
-            )
-        end
-    end)
+    local urls = minetest.settings:get("serverlist_url")
+
+    for url in string.gmatch(urls, "[^,]+") do
+        http.fetch({
+            url = url .. "/announce",
+            timeout = 30,
+            extra_headers = {
+                "Content-Type: multipart/form-data; boundary=" .. boundary
+            },
+            data = post_data,
+            method = "POST"
+        }, function(res)
+            if res.code >= 400 or res.code == 0 then
+                minetest.log(
+                    "warning",
+                    "[announce-mod] Announcing failed for action: '" .. data.action ..
+                        "' code: " .. res.code ..
+                        " server: '" .. url .. "'"
+                )
+            end
+        end)
+    end
 end
 
 local function fill_common_fields(data)
