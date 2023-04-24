@@ -8,7 +8,8 @@ RUN git clone https://github.com/minetest/serverlist /serverlist &&\
     cd static &&\
     ../node_modules/dot/bin/dot-packer -s . &&\
     cd /serverlist &&\
-    pip install -r requirements.txt
+    pip install -r requirements.txt &&\
+    sed -i 's/cache_timeout/max_age/' server.py
 
 COPY config.py /serverlist/config.py
 
