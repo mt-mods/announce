@@ -8,7 +8,6 @@ local function send_announce_payload(data)
     local post_data = "--" .. boundary .. "\r\nContent-Disposition: form-data; name=\"json\"\r\n\r\n" ..
         json .. "\r\n" ..
         "--" .. boundary .. "--\r\n"
-    print(post_data)
 
     http.fetch({
         url = minetest.settings:get("serverlist_url") .. "/announce",
@@ -19,10 +18,12 @@ local function send_announce_payload(data)
         data = post_data,
         method = "POST"
     }, function(res)
-        print(dump({
-            res = res
-        }))
-        -- TODO
+        if res.code >= 400 then
+            minetest.log(
+                "warning",
+                "[announce-mod] Announcing failed for action: '" .. data.action .. "' code: " .. res.code
+            )
+        end
     end)
 end
 

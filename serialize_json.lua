@@ -27,10 +27,6 @@ function announce.serialize_json(data)
             -- object
             local str = ""
             for k, v in pairs(data) do
-                print(dump({
-                    k = k,
-                    v = v
-                }))
                 str = str .. announce.serialize_json(k) .. ":" .. announce.serialize_json(v) .. ","
             end
             -- remove trailing comma
