@@ -8,10 +8,10 @@ Minetest server-announce mod
 # Features
 
 * Announcing the server to the serverlist
+* Player-anonymization (if the `announce_anonymize` setting is `true`)
 
 Planned features
 * Multi-announce
-* Player-anonymization
 
 # Shortcomings
 

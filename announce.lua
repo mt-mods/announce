@@ -53,8 +53,13 @@ local function fill_start_update_fields(data)
     data.clients = #players
     data.clients_max = tonumber(minetest.settings:get("max_users"))
     data.clients_list = {}
-    for _, player in ipairs(players) do
-        table.insert(data.clients_list, player:get_player_name())
+    for i, player in ipairs(players) do
+        if announce.anonymize_players then
+            table.insert(data.clients_list, "anon-" .. i)
+        else
+            -- use plain names
+            table.insert(data.clients_list, player:get_player_name())
+        end
     end
 
     local game_info = minetest.get_game_info()

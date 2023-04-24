@@ -1,4 +1,6 @@
-announce = {}
+announce = {
+    anonymize_players = minetest.settings:get_bool("announce_anonymize")
+}
 
 local http = minetest.request_http_api()
 if not http then
