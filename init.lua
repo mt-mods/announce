@@ -12,6 +12,7 @@ local MP = minetest.get_modpath("announce")
 dofile(MP .. "/proto.lua")
 loadfile(MP.."/announce.lua")(http)
 dofile(MP .. "/serialize_json.lua")
+dofile(MP .. "/lag.lua")
 dofile(MP .. "/lifecycle.lua")
 
 if minetest.get_modpath("mtt") and mtt.enabled then

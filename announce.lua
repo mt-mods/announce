@@ -93,7 +93,7 @@ function announce.announce_update()
     minetest.log("info", "[announce-mod] announce_update()")
     local data = {
         action = "update",
-        lag = minetest.get_server_max_lag()
+        lag = announce.get_avg_lag()
     }
 
     fill_common_fields(data)
