@@ -1,0 +1,72 @@
+diff --git a/server.py b/server.py
+index d3da93a..accb8ca 100755
+--- a/server.py
++++ b/server.py
+@@ -54,8 +54,7 @@ def index():
+ def list():
+ 	# We have to make sure that the list isn't cached,
+ 	# since the list isn't really static.
+-	return send_from_directory(app.static_folder, "list.json",
+-			cache_timeout=0)
++	return send_from_directory(app.static_folder, "list.json", max_age=0)
+ 
+ 
+ @app.route("/geoip")
+@@ -81,6 +80,7 @@ def announce():
+ 		return "Banned (IP).", 403
+ 
+ 	data = request.values["json"]
++	app.logger.warning("Announce-data: %s" % (data))
+ 
+ 	if len(data) > 8192:
+ 		return "JSON data is too big.", 413
+@@ -88,16 +88,20 @@ def announce():
+ 	try:
+ 		server = json.loads(data)
+ 	except:
++		app.logger.warning("JSON Error: %s" % (data))
+ 		return "Unable to process JSON data.", 400
+ 
+ 	if type(server) != dict:
++		app.logger.warning("JSON Dict error")
+ 		return "JSON data is not an object.", 400
+ 
+ 	if not "action" in server:
++		app.logger.warning("JSON action error")
+ 		return "Missing action field.", 400
+ 
+ 	action = server["action"]
+ 	if action not in ("start", "update", "delete"):
++		app.logger.warning("JSON invalid-action error")
+ 		return "Invalid action field.", 400
+ 
+ 	if action == "start":
+@@ -129,6 +133,7 @@ def announce():
+ 		serverList.save()
+ 		return "Removed from server list."
+ 	elif not checkRequest(server):
++		app.logger.warning("JSON invalid error (checkRequest)")
+ 		return "Invalid JSON data.", 400
+ 
+ 	if action == "update" and not old:
+@@ -266,6 +271,7 @@ fields = {
+ 
+ def checkRequest(server):
+ 	for name, data in fields.items():
++		app.logger.warning("Checking: %s, expected type: %s" % (name, data[1]))
+ 		if not name in server:
+ 			if data[0]: return False
+ 			else: continue
+@@ -282,10 +288,12 @@ def checkRequest(server):
+ 			continue
+ 		#### End compatibility code ####
+ 		if type(server[name]).__name__ != data[1]:
++			app.logger.warning("JSON Field error: %s, expected type: %s" % (name, data[1]))
+ 			return False
+ 		if len(data) >= 3:
+ 			for item in server[name]:
+ 				if type(item).__name__ != data[2]:
++					app.logger.warning("JSON Field-array error: %s, expected type: %s" % (name, data[2]))
+ 					return False
+ 	return True
+ 

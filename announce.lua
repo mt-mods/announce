@@ -49,19 +49,24 @@ function announce.announce_start()
     -- replace nulled client-list
     json = json:gsub("\"clients_list\":null", "\"clients_list\":[]")
 
-    local boundary = "------------------------1234"
-    local post_data = boundary .. "\nContent-Disposition: form-data; name=\"json\"\n\n" .. json .. "\n" .. boundary
+    local boundary = "" .. (math.random() * 10000)
+    local post_data = "--" .. boundary .. "\r\nContent-Disposition: form-data; name=\"json\"\r\n\r\n" ..
+        json .. "\r\n" ..
+        "--" .. boundary .. "--\r\n"
     print(post_data)
 
     http.fetch({
         url = minetest.settings:get("serverlist_url") .. "/announce",
         timeout = 30,
         extra_headers = {
-            "Content-Type: multipart/form-data; boundary=\"" .. boundary .. "\""
+            "Content-Type: multipart/form-data; boundary=" .. boundary
         },
         data = post_data,
         method = "POST"
-    }, function()
+    }, function(res)
+        print(dump({
+            res = res
+        }))
         -- TODO
     end)
 end
