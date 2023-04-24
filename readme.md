@@ -1,77 +1,24 @@
+Minetest server-announce mod
 
+![](https://github.com/mt-mods/announce/workflows/luacheck/badge.svg)
+![](https://github.com/mt-mods/announce/workflows/test/badge.svg)
+[![License](https://img.shields.io/badge/License-MIT%20and%20CC%20BY--SA%203.0-green.svg)](license.txt)
+[![Download](https://img.shields.io/badge/Download-ContentDB-blue.svg)](https://content.minetest.net/packages/mt-mods/announce)
 
-```sh
-docker-compose exec minetest sh
-```
+# Features
 
-## Start
+* Announcing the server to the serverlist
 
-```sh
-json='{
-    "action":"start",
-    "port":30000,
-    "address":"minetest",
-    "name":"testserver",
-    "description":"desc",
-    "version":"1.2.3-xy",
-    "proto_min": 39,
-    "proto_max": 40,
-    "url": "http://minetest:8080",
-    "creative": false,
-    "damage": false,
-    "password": true,
-    "pvp": false,
-    "uptime": 1,
-    "game_time": 100,
-    "clients": 0,
-    "clients_max": 20,
-    "clients_list": [],
-    "gameid":"mygame",
-    "dedicated":true,
-    "rollback":false,
-    "mapgen":"v7",
-    "privs":"shout",
-    "can_see_far_names":false,
-    "mods":["default"]
-}'
-curl -v -F "json=${json}" "http://serverlist:8080/announce"
-```
+Planned features
+* Multi-announce
+* Player-anonymization
 
-## Update
+# Shortcomings
 
-```sh
-json='{
-    "action":"update",
-    "port":30000,
-    "address":"minetest",
-    "name":"testserver",
-    "description":"desc",
-    "version":"1.2.3-xy",
-    "proto_min": 39,
-    "proto_max": 40,
-    "url": "http://minetest:8080",
-    "creative": false,
-    "damage": false,
-    "password": true,
-    "pvp": false,
-    "uptime": 1,
-    "game_time": 100,
-    "clients": 0,
-    "clients_max": 20,
-    "clients_list": [],
-    "gameid":"mygame",
-    "lag": 0.2
-}'
-curl -v -F "json=${json}" "http://serverlist:8080/announce"
-```
+The engine doesn't currently expose the supported protocol versions
+and the mod tries to guess the min- and max-values as best as possible
+depending on the `minetest.features` table.
 
-## Delete
+# License
 
-```sh
-json='{
-    "action":"delete",
-    "port":30000,
-    "address":"minetest"
-}'
-curl -v -F "json=${json}" "http://serverlist:8080/announce"
-```
+MIT
