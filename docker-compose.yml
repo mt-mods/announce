@@ -13,6 +13,11 @@ services:
     - "minetest_home:/root/.minetest"
     - "./minetest.conf:/etc/minetest/minetest.conf"
     - "./:/root/.minetest/worlds/world/worldmods/announce/"
+  environment:
+    http_proxy: ""
+    https_proxy: ""
+    HTTP_PROXY: ""
+    HTTPS_PROXY: ""
   ports:
     - "30000:30000/udp"
 

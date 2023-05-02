@@ -3,11 +3,8 @@ local http = ...
 -- sends a multipart request to the announce url
 local function send_announce_payload(data)
     local json = announce.serialize_json(data)
-
-    local boundary = "" .. (math.random() * 10000)
-    local post_data = "--" .. boundary .. "\r\nContent-Disposition: form-data; name=\"json\"\r\n\r\n" ..
-        json .. "\r\n" ..
-        "--" .. boundary .. "--\r\n"
+    local mp = announce.multipart()
+    mp.add("json", json)
 
     local urls = minetest.settings:get("serverlist_url")
 
@@ -16,9 +13,9 @@ local function send_announce_payload(data)
             url = url .. "/announce",
             timeout = 30,
             extra_headers = {
-                "Content-Type: multipart/form-data; boundary=" .. boundary
+                "Content-Type: " .. mp.contentType()
             },
-            data = post_data,
+            data = mp.serialize(),
             method = "POST"
         }, function(res)
             if res.code >= 400 or res.code == 0 then
