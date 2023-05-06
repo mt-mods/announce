@@ -11,9 +11,6 @@ RUN git clone https://github.com/minetest/serverlist /serverlist &&\
     pip install -r requirements.txt
 
 COPY config.py /serverlist/config.py
-COPY debug.patch /serverlist/debug.patch
-
-RUN cd /serverlist && cat debug.patch | patch -p1
 
 EXPOSE 8080
 ENTRYPOINT sh -c 'cd /serverlist && ./server.py'
