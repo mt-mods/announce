@@ -1,8 +1,13 @@
 
 -- dirty hack to get server proto versions, relies currently on the `minetest.features` table
 function announce.get_proto()
-    local min, max
+    local version = minetest.get_version()
+    if version.proto_min and version.proto_max then
+        -- use engine provided min/max
+        return version.proto_min, version.proto_max
+    end
 
+    local min, max
     if minetest.features.compress_zstd then
         -- 5.7.x
         min, max = 37, 42

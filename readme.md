@@ -11,9 +11,9 @@ Minetest server-announce mod
 * Player-anonymization (if the `announce_anonymize` setting is `true`)
 * Multi-announce
 
-# Shortcomings
+# Shortcomings (minetest <= `5.7.0`)
 
-The engine doesn't currently expose the supported protocol versions
+The engine doesn't expose the supported protocol versions in <= `5.7.0`
 and the mod tries to guess the min- and max-values as best as possible
 depending on the `minetest.features` table.
 
