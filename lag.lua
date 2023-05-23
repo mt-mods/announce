@@ -11,7 +11,7 @@ minetest.register_globalstep(function()
 
 	if avg_lag > dtime then
         -- decrease slowly
-		avg_lag = dtime - (dtime/100)
+		avg_lag = avg_lag - (dtime/100)
     else
         -- increase slowly
         avg_lag = avg_lag + (dtime/100)
