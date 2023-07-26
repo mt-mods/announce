@@ -65,8 +65,12 @@ local function fill_start_update_fields(data)
         end
     end
 
-    local game_info = minetest.get_game_info()
-    data.gameid = game_info.id
+    if type(minetest.get_game_info) == "function" then
+        local game_info = minetest.get_game_info()
+        data.gameid = game_info.id
+    else
+        data.gameid = "unknown"
+    end
 end
 
 function announce.announce_start()
