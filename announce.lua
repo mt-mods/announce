@@ -74,7 +74,6 @@ local function fill_start_update_fields(data)
 end
 
 function announce.announce_start()
-    minetest.log("info", "[announce-mod] announce_start()")
     local data = {
         action = "start",
         dedicated = true,
@@ -91,7 +90,6 @@ function announce.announce_start()
 end
 
 function announce.announce_update()
-    minetest.log("info", "[announce-mod] announce_update()")
     local data = {
         action = "update",
         lag = announce.get_avg_lag()
@@ -103,7 +101,6 @@ function announce.announce_update()
 end
 
 function announce.announce_delete()
-    minetest.log("info", "[announce-mod] announce_delete()")
     local data = {
         action = "delete"
     }
