@@ -9,4 +9,6 @@ jobs:
       with:
         modname: announce
         enable_coverage: "true"
+        additional_config: |
+          secure.http_mods = announce
     - uses: coverallsapp/github-action@v1
