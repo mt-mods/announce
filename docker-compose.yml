@@ -21,16 +21,5 @@ services:
   ports:
     - "30000:30000/udp"
 
- sut:
-  build:
-   context: ./test
-   args:
-    ENGINE_VERSION: ${ENGINE_VERSION:-5.7.0}
-  user: root
-  volumes:
-    - "./:/root/.minetest/worlds/world/worldmods/announce/"
-    - "./test/world.mt:/root/.minetest/worlds/world/world.mt"
-    - "./test/minetest.conf:/minetest.conf"
-
 volumes:
   minetest_home: {}
